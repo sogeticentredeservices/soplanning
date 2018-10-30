@@ -8,11 +8,6 @@
         if {path} is /
         to /www/index.php?__path__=/
     }
-    # monkey patch
-    rewrite {
-        if {path} is /www/index.php
-        to /www/install/index.php
-    }
     # config shouldn't be accessible from outside
     status 403 {
         /html2pdf
