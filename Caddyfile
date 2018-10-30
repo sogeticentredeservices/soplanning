@@ -4,10 +4,6 @@
 
     fastcgi / 127.0.0.1:9000 php
 
-    rewrite {
-        if {path} is /
-        to /www/index.php?__path__=/
-    }
     # config shouldn't be accessible from outside
     status 403 {
         /html2pdf
