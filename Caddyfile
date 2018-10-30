@@ -1,0 +1,11 @@
+# vi: set ft=caddyfile :
+0.0.0.0:8080 {
+    root /var/www/html
+
+    rewrite {
+        if {path} is /
+        to /www/index.php?__path__=/
+    }
+
+    fastcgi / 127.0.0.1:9000 php
+}
