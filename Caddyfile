@@ -2,10 +2,29 @@
 0.0.0.0:8080 {
     root /var/www/html
 
+    fastcgi / 127.0.0.1:9000 php
+
     rewrite {
         if {path} is /
         to /www/index.php?__path__=/
     }
-
-    fastcgi / 127.0.0.1:9000 php
+    # monkey patch
+    rewrite {
+        if {path} is /www/index.php
+        to /www/install/index.php
+    }
+    # config shouldn't be accessible from outside
+    status 403 {
+        /html2pdf
+        /history
+        /holidays
+        /smarty
+        /sql
+        /templates
+        /includes
+        /jpgraph
+        /phpmailer
+        /config.inc
+        /database.inc
+    }
 }
