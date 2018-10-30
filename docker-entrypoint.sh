@@ -9,6 +9,8 @@ if [ "$1" == "/usr/bin/supervisord" ]; then
             # Copy env variable to templates
             echo "Configuration files not found."
             echo "Generating configuration files..."
+            chmod -R 755 /var/www/html
+            chown -R www-data:www-data /var/www/html
         fi
     fi
 fi

@@ -8,6 +8,7 @@ ENV PKG_VER=1-42
 RUN apk add --no-cache --update \
         unzip caddy supervisor openldap-dev
 
+# Install php modules
 RUN docker-php-ext-install mysqli ldap
 
 # Copy caddy config
