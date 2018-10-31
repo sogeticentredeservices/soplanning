@@ -1,21 +1,6 @@
 # vi: set ft=caddyfile :
 0.0.0.0:8080 {
-    root /var/www/html
+    root /var/www/html/www
 
     fastcgi / 127.0.0.1:9000 php
-
-    # config shouldn't be accessible from outside
-    status 403 {
-        /html2pdf
-        /history
-        /holidays
-        /smarty
-        /sql
-        /templates
-        /includes
-        /jpgraph
-        /phpmailer
-        /config.inc
-        /database.inc
-    }
 }

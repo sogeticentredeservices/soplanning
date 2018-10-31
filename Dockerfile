@@ -9,7 +9,7 @@ RUN apk add --no-cache --update \
         unzip caddy supervisor openldap-dev libpng-dev
 
 # Install php modules
-RUN docker-php-ext-install mysqli ldap gd
+RUN docker-php-ext-install mysqli ldap gd pdo pdo_mysql
 
 # Copy caddy config
 COPY Caddyfile /etc/Caddyfile
