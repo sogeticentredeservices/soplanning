@@ -6,7 +6,7 @@ ENV PKG_VER=1-42
 
 # Installed required dependencies
 RUN apk add --no-cache --update \
-        unzip caddy supervisor openldap-dev libpng-dev
+        unzip caddy supervisor openldap-dev libpng-dev bash
 
 # Install php modules
 RUN docker-php-ext-install mysqli ldap gd pdo pdo_mysql
