@@ -67,9 +67,9 @@ function __autoload($nomClasse) {
 	}elseif($nomClasse == 'HTML2PDF_myPdf') {
 		require BASE . '/../html2pdf/_class/myPdf.class.php';
 	}elseif($nomClasse == 'HTML2PDF_parsingCss') {
-		require BASE . '/../html2pdf/_class/parsingCss.class.php';		
+		require BASE . '/../html2pdf/_class/parsingCss.class.php';
 	}elseif($nomClasse == 'HTML2PDF_parsingHtml') {
-		require BASE . '/../html2pdf/_class/parsingHtml.class.php';		
+		require BASE . '/../html2pdf/_class/parsingHtml.class.php';
 	}elseif($nomClasse == 'TCPDF') {
 		require BASE . '/../html2pdf/vendor/tecnickcom/tcpdf/tcpdf.php';
 	}else {
@@ -114,25 +114,25 @@ if (isset($_SESSION['preferences']['dateformat']))
 	switch($_SESSION['preferences']['dateformat'])	{
 		case 'fr':
 			define ('CONFIG_DATE_LONG','d/m/Y');
-			define ('CONFIG_DATE_SHORT','d/m/y');	
+			define ('CONFIG_DATE_SHORT','d/m/y');
 			define ('CONFIG_DATE_SHORT2','d/m');
-			define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');		
+			define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');
 			define ('CONFIG_DATE_DATEPICKER','dd/mm/yy');
 			define ('CONFIG_DATE_FORMAT','fr');
 			break;
 		case 'us':
 			define ('CONFIG_DATE_LONG','m-d-Y');
-			define ('CONFIG_DATE_SHORT','m-d-y');		
+			define ('CONFIG_DATE_SHORT','m-d-y');
 			define ('CONFIG_DATE_SHORT2','m-d');
-			define ('CONFIG_DATE_FIRST_DAY_MONTH','m-01-Y');		
+			define ('CONFIG_DATE_FIRST_DAY_MONTH','m-01-Y');
 			define ('CONFIG_DATE_DATEPICKER','mm-dd-yy');
 			define ('CONFIG_DATE_FORMAT','us');
 			break;
 		case 'jp':
 			define ('CONFIG_DATE_LONG','Y-m-d');
-			define ('CONFIG_DATE_SHORT','y-m-d');		
+			define ('CONFIG_DATE_SHORT','y-m-d');
 			define ('CONFIG_DATE_SHORT2','m-d');
-			define ('CONFIG_DATE_FIRST_DAY_MONTH','Y-m-01');		
+			define ('CONFIG_DATE_FIRST_DAY_MONTH','Y-m-01');
 			define ('CONFIG_DATE_DATEPICKER','yy-mm-dd');
 			define ('CONFIG_DATE_FORMAT','jp');
 			break;
@@ -141,7 +141,7 @@ if (isset($_SESSION['preferences']['dateformat']))
 			define ('CONFIG_DATE_LONG','d/m/Y');
 			define ('CONFIG_DATE_SHORT','d/m/y');
 			define ('CONFIG_DATE_SHORT2','d/m');
-			define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');	
+			define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');
 			define ('CONFIG_DATE_DATEPICKER','dd/mm/yy');
 			define ('CONFIG_DATE_FORMAT','fr');
 			break;
@@ -152,12 +152,12 @@ if (isset($_SESSION['preferences']['dateformat']))
 		define ('CONFIG_DATE_LONG','d/m/Y');
 		define ('CONFIG_DATE_SHORT','d/m/y');
 		define ('CONFIG_DATE_SHORT2','d/m');
-		define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');	
+		define ('CONFIG_DATE_FIRST_DAY_MONTH','01/m/Y');
 		define ('CONFIG_DATE_DATEPICKER','dd/mm/yy');
-		define ('CONFIG_DATE_FORMAT','fr');	
+		define ('CONFIG_DATE_FORMAT','fr');
 	}
 	define ('CONFIG_DATE_MYSQL','Y-m-d');
-	
+
 // Mobile Detection
 $detect = new Mobile_Detect;
 if($detect->isMobile())
@@ -193,5 +193,14 @@ if(isset($_GET) && !empty($_GET['language']) && in_array($_GET['language'], arra
 }
 
 setlocale(LC_ALL, $lang . '_' . strtoupper($lang), $lang . '_' . strtoupper($lang) . '.ISO8859-1', $lang . '_' . strtoupper($lang) . '.ISO-8859-1', $lang . '_' . strtoupper($lang) . '.UTF-8', $lang . '_' . strtoupper($lang) . '.UTF8', $lang);
+
+// https://extranet.cds.fr.sogeti.com/wiki_23/index.php?title=Soplanning_Int%C3%A9gration_SSO
+// ADU : Intégration SSO
+$user = New User();
+if(isset($_SERVER['HTTP_LOGIN']) && $user->db_load(array('login', '=', $_SERVER['HTTP_LOGIN']))) {
+    $_SESSION['user_id'] = $user->user_id;
+} else {
+    header("Location: {{SSO_PORTAL}}/noaccess.html");
+}
 
 ?>

@@ -17,6 +17,9 @@ COPY Caddyfile /etc/Caddyfile
 COPY supervisord.conf /etc/supervisord.conf
 # Copy docker entrypoint
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+# Copy template files
+COPY database.inc.template /usr/src/
+COPY config.inc.template /usr/src/
 
 # Working directory
 WORKDIR /var/www/html
