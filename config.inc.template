@@ -200,7 +200,7 @@ $user = New User();
 if(isset($_SERVER['HTTP_LOGIN']) && $user->db_load(array('login', '=', $_SERVER['HTTP_LOGIN']))) {
     $_SESSION['user_id'] = $user->user_id;
 } else {
-    header("Location: {{SSO_PORTAL}}/noaccess.html");
+    header("Location: {{SSO_PORTAL_URL}}/noaccess.html");
 }
 
 ?>
