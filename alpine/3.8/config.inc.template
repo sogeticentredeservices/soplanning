@@ -194,13 +194,14 @@ if(isset($_GET) && !empty($_GET['language']) && in_array($_GET['language'], arra
 
 setlocale(LC_ALL, $lang . '_' . strtoupper($lang), $lang . '_' . strtoupper($lang) . '.ISO8859-1', $lang . '_' . strtoupper($lang) . '.ISO-8859-1', $lang . '_' . strtoupper($lang) . '.UTF-8', $lang . '_' . strtoupper($lang) . '.UTF8', $lang);
 
-// https://extranet.cds.fr.sogeti.com/wiki_23/index.php?title=Soplanning_Int%C3%A9gration_SSO
-// ADU : Intégration SSO
+//ADU : Integration SSO
 $user = New User();
-if(isset($_SERVER['HTTP_LOGIN']) && $user->db_load(array('login', '=', $_SERVER['HTTP_LOGIN']))) {
-    $_SESSION['user_id'] = $user->user_id;
-} else {
-    header("Location: {{SSO_PORTAL_URL}}/noaccess.html");
+if(isset($_SERVER['HTTP_LOGIN']) && isset($_SERVER['HTTP_EMAIL']) && $user->db_load(array('login', '=', $_SERVER['HTTP_LOGIN'])) && $user->email == $_SERVER['HTTP_EMAIL']){
+        $_SESSION['user_id'] = $user->user_id;
+}
+else {
+        $_SESSION['public'] = 1;
+        $_SESSION['user_id'] = 'publicspl';
 }
 
 ?>
