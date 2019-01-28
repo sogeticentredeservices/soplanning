@@ -1,8 +1,8 @@
-FROM php:7.1-apache
+FROM php:7.2-apache
 LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
-ENV PKG_BASEVER=v1.42
-ENV PKG_VER=1-42
+ENV PKG_BASEVER=v1.43
+ENV PKG_VER=1-43
 ENV APACHE_DOCUMENT_ROOT /var/www/html/www
 
 # Installed required dependencies
