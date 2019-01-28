@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.1-fpm-alpine3.8
 LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV PKG_BASEVER=v1.42
