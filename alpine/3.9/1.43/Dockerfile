@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine3.8
+FROM php:7.2-fpm-alpine3.9
 LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV PKG_BASEVER=v1.43
@@ -6,10 +6,12 @@ ENV PKG_VER=1-43
 
 # Installed required dependencies
 RUN apk add --no-cache --update \
-        unzip caddy supervisor openldap-dev libpng-dev bash
+        unzip bash wget caddy supervisor openldap-dev libpng-dev freetype libjpeg-turbo-dev
 
 # Install php modules
-RUN docker-php-ext-install mysqli ldap gd pdo pdo_mysql
+RUN docker-php-ext-install -j$(nproc) mysqli ldap pdo pdo_mysql iconv \
+        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        && docker-php-ext-install -j$(nproc) gd
 
 # Copy caddy config
 COPY Caddyfile /etc/Caddyfile

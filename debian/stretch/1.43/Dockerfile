@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends unzip bash wget libldap-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
 
 # Install php modules
-RUN docker-php-ext-install -j$(nproc) mysqli ldap gd pdo pdo_mysql iconv \
+RUN docker-php-ext-install -j$(nproc) mysqli ldap pdo pdo_mysql iconv \
         && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
         && docker-php-ext-install -j$(nproc) gd
 
