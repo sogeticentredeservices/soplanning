@@ -3,13 +3,22 @@ LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV PKG_BASEVER=v1.43
 ENV PKG_VER=1-43
+ENV SOPLANNING_DOWNLOAD_SHA256=f96143d476f7348f7dd0fb35fa504b6f21970e2aa929c4849f5a8f1d88b075aa
 
 # Installed required dependencies
 RUN apk add --no-cache --update \
-        unzip bash wget caddy supervisor openldap-dev libpng-dev freetype libjpeg-turbo-dev
+        bash \
+        caddy \
+        curl \
+        freetype \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        openldap-dev \
+        supervisor \
+        unzip
 
 # Install php modules
-RUN docker-php-ext-install -j$(nproc) mysqli ldap pdo pdo_mysql iconv \
+RUN docker-php-ext-install -j$(nproc) iconv ldap mysqli pdo pdo_mysql \
         && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
         && docker-php-ext-install -j$(nproc) gd
 
@@ -27,9 +36,10 @@ COPY config.inc.template /usr/src/
 WORKDIR /var/www/html
 
 # Get latest soplanning release
-RUN wget -O \
-        "soplanning-$PKG_VER.zip" \
+RUN curl -fSL -o \
+        "soplanning.zip" \
         "https://sourceforge.net/projects/soplanning/files/soplanning/$PKG_BASEVER/soplanning-$PKG_VER.zip/download" \
+    && echo "$SOPLANNING_DOWNLOAD_SHA256 *soplanning.zip" | sha256sum -c - \
     && mkdir -p /usr/src/soplanning \
     && unzip "soplanning-$PKG_VER.zip" -d /usr/src \
     && rm "soplanning-$PKG_VER.zip"
