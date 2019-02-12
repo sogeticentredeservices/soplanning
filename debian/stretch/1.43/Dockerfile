@@ -1,18 +1,28 @@
 FROM php:7.2-apache
 LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/www
 ENV PKG_BASEVER=v1.43
 ENV PKG_VER=1-43
-ENV APACHE_DOCUMENT_ROOT /var/www/html/www
+ENV SOPLANNING_DOWNLOAD_SHA256=f96143d476f7348f7dd0fb35fa504b6f21970e2aa929c4849f5a8f1d88b075aa
 
 # Installed required dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends unzip bash wget libldap-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    curl \
+    libldap-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libldap-dev \
+    libpng-dev \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install php modules
-RUN docker-php-ext-install -j$(nproc) mysqli ldap pdo pdo_mysql iconv \
+RUN docker-php-ext-install -j$(nproc) iconv ldap mysqli pdo pdo_mysql \
         && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-        && docker-php-ext-install -j$(nproc) gd
+        && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
+        && docker-php-ext-install -j$(nproc) gd ldap
 
 # Copy docker entrypoint
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
@@ -24,12 +34,13 @@ COPY config.inc.template /usr/src/
 WORKDIR /var/www/html
 
 # Get latest soplanning release
-RUN wget -O \
-        "soplanning-$PKG_VER.zip" \
+RUN curl -fSL -o \
+        "soplanning.zip" \
         "https://sourceforge.net/projects/soplanning/files/soplanning/$PKG_BASEVER/soplanning-$PKG_VER.zip/download" \
+    && echo "$SOPLANNING_DOWNLOAD_SHA256 *soplanning.zip" | sha256sum -c - \
     && mkdir -p /usr/src/soplanning \
-    && unzip "soplanning-$PKG_VER.zip" -d /usr/src \
-    && rm "soplanning-$PKG_VER.zip"
+    && unzip "soplanning.zip" -d /usr/src \
+    && rm "soplanning.zip"
 
 # Change apache root directory
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
