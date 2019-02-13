@@ -45,8 +45,6 @@ RUN curl -fSL -o \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
 
-RUN adduser -D www-data
-
 USER www-data
 
 EXPOSE 8080
