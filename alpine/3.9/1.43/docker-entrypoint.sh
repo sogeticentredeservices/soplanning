@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$1" == "/usr/bin/supervisord" ]; then
+if [ "$1" == "/usr/bin/supervisord" ] && [ "$(id -u)" == "0" ]; then
     if [ ! -e index.php ]; then
         echo >&2 "SoPlanning not found in $PWD - copying now..."
         cp -r /usr/src/soplanning/* /var/www/html/
@@ -37,6 +37,8 @@ if [ "$1" == "/usr/bin/supervisord" ]; then
 
         echo >&2 "Complete! SoPlanning is ready to use!"
     fi
+
+    exec su-exec www-data "$@"
 fi
 
-exec gosu www-data "$@"
+exec "$@"

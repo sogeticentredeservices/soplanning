@@ -11,10 +11,10 @@ RUN apk add --no-cache --update \
         caddy \
         curl \
         freetype-dev \
-        gosu \
         libjpeg-turbo-dev \
         libpng-dev \
         openldap-dev \
+        su-exec \
         supervisor \
         unzip
 
