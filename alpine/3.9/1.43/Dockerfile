@@ -41,8 +41,8 @@ RUN curl -fSL -o \
         "https://sourceforge.net/projects/soplanning/files/soplanning/$PKG_BASEVER/soplanning-$PKG_VER.zip/download" \
     && echo "$SOPLANNING_DOWNLOAD_SHA256 *soplanning.zip" | sha256sum -c - \
     && mkdir -p /usr/src/soplanning \
-    && unzip "soplanning-$PKG_VER.zip" -d /usr/src \
-    && rm "soplanning-$PKG_VER.zip"
+    && unzip "soplanning.zip" -d /usr/src \
+    && rm "soplanning.zip"
 
 EXPOSE 8080
 
