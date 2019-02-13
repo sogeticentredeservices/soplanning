@@ -44,8 +44,6 @@ RUN curl -fSL -o \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
 
-USER www-data
-
 EXPOSE 8080
 
 ENTRYPOINT ["docker-entrypoint.sh"]
