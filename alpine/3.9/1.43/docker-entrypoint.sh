@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$1" == "/usr/bin/supervisord" ] && [ "$(id -u)" == "0" ]; then
+if [ "$1" == "caddy" ] && [ "$(id -u)" == "0" ]; then
     if [ ! -e index.php ]; then
         echo >&2 "SoPlanning not found in $PWD - copying now..."
         cp -r /usr/src/soplanning/* /var/www/html/
