@@ -2,7 +2,6 @@
 
 set -e
 
-# if [ "$1" == "/usr/bin/supervisord" ]; then
 if [ "$1" == "apache2-foreground" ]; then
     if [ ! -e index.php ]; then
         echo >&2 "SoPlanning not found in $PWD - copying now..."
