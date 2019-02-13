@@ -10,7 +10,7 @@ RUN apk add --no-cache --update \
         bash \
         caddy \
         curl \
-        freetype \
+        freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         openldap-dev \
