@@ -11,6 +11,7 @@ RUN apk add --no-cache --update \
         caddy \
         curl \
         freetype-dev \
+        gosu \
         libjpeg-turbo-dev \
         libpng-dev \
         openldap-dev \
@@ -44,7 +45,11 @@ RUN curl -fSL -o \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
 
+RUN adduser -D www-data
+
+USER www-data
+
 EXPOSE 8080
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord","-c","/etc/supervisord.conf"]
