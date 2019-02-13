@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine3.9
+FROM alpine:3.9
 LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV PKG_BASEVER=v1.43
@@ -10,24 +10,44 @@ RUN apk add --no-cache --update \
         bash \
         caddy \
         curl \
-        freetype-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        openldap-dev \
+        php7-fpm \
         unzip
 
-# Install php modules
-RUN docker-php-ext-install -j$(nproc) iconv ldap mysqli pdo pdo_mysql \
-        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-        && docker-php-ext-install -j$(nproc) gd
+# essential php libs
+RUN apk add --no-cache \
+        php7-bcmath \
+        php7-ctype \
+        php7-curl \
+        php7-dom \
+        php7-fileinfo \
+        php7-gd \
+        php7-iconv \
+        php7-json \
+        php7-ldap \
+        php7-mbstring \
+        php7-mysqli \
+        php7-openssl \
+        php7-pdo \
+        php7-pdo_mysql \
+        php7-pgsql \
+        php7-phar \
+        php7-session \
+        php7-sqlite3 \
+        php7-tokenizer \
+        php7-xml \
+        php7-xmlreader \
+        php7-xmlwriter \
+        php7-zip
 
-# Copy caddy config
-COPY Caddyfile /etc/Caddyfile
-# Copy docker entrypoint
-COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
-# Copy template files
-COPY database.inc.template /usr/src/
-COPY config.inc.template /usr/src/
+# symblink php7 to php
+RUN ln -sf /usr/bin/php7 /usr/bin/php
+
+# symlink php-fpm7 to php-fpm
+RUN ln -sf /usr/bin/php-fpm7 /usr/bin/php-fpm
+
+# add a php www-user instead of nobody
+RUN sed -i "s|^user = .*|user = www-data|g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|^group = .*|group = www-data|g" /etc/php7/php-fpm.d/www.conf
 
 # Working directory
 WORKDIR /var/www/html
@@ -40,6 +60,16 @@ RUN curl -fSL -o \
     && mkdir -p /usr/src/soplanning \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
+
+RUN adduser -D www-data
+
+# Copy caddy config
+COPY Caddyfile /etc/Caddyfile
+# Copy docker entrypoint
+COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+# Copy template files
+COPY database.inc.template /usr/src/
+COPY config.inc.template /usr/src/
 
 EXPOSE 80
 

@@ -5,5 +5,5 @@ root /var/www/html/www
 
 fastcgi / 127.0.0.1:9000 php
 
-on startup /usr/local/sbin/php-fpm
+on startup php-fpm7
 
