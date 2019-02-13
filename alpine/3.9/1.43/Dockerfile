@@ -5,7 +5,7 @@ ENV PKG_BASEVER=v1.43
 ENV PKG_VER=1-43
 ENV SOPLANNING_DOWNLOAD_SHA256=f96143d476f7348f7dd0fb35fa504b6f21970e2aa929c4849f5a8f1d88b075aa
 
-# Installed required dependencies
+# Install required dependencies
 RUN apk add --no-cache --update \
         bash \
         caddy \
@@ -13,8 +13,8 @@ RUN apk add --no-cache --update \
         php7-fpm \
         unzip
 
-# essential php libs
-RUN apk add --no-cache \
+# Php bloat
+RUN apk add --no-cache --update \
         php7-bcmath \
         php7-ctype \
         php7-curl \
@@ -39,16 +39,6 @@ RUN apk add --no-cache \
         php7-xmlwriter \
         php7-zip
 
-# symblink php7 to php
-RUN ln -sf /usr/bin/php7 /usr/bin/php
-
-# symlink php-fpm7 to php-fpm
-RUN ln -sf /usr/bin/php-fpm7 /usr/bin/php-fpm
-
-# add a php www-user instead of nobody
-RUN sed -i "s|^user = .*|user = www-data|g" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "s|^group = .*|group = www-data|g" /etc/php7/php-fpm.d/www.conf
-
 # Working directory
 WORKDIR /var/www/html
 
@@ -61,15 +51,19 @@ RUN curl -fSL -o \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
 
+# Run php-fpm as www-data
+RUN sed -i "s|^user = .*|user = www-data|g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|^group = .*|group = www-data|g" /etc/php7/php-fpm.d/www.conf
+
 RUN adduser -D www-data
 
-# Copy caddy config
-COPY Caddyfile /etc/Caddyfile
-# Copy docker entrypoint
-COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
-# Copy template files
+# Template files
 COPY database.inc.template /usr/src/
 COPY config.inc.template /usr/src/
+# Caddy configuration
+COPY Caddyfile /etc/Caddyfile
+# Docker entrypoint
+COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 EXPOSE 80
 
