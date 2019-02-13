@@ -1,8 +1,9 @@
 # vi: set ft=caddyfile :
-0.0.0.0:8080 {
-    root /var/www/html/www
+0.0.0.0:80
 
-    fastcgi / 127.0.0.1:9000 php
+root /var/www/html/www
 
-    on startup /usr/local/sbin/php-fpm
-}
+fastcgi / 127.0.0.1:9000 php
+
+on startup /usr/local/sbin/php-fpm
+

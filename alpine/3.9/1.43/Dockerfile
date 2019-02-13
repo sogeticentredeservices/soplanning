@@ -14,7 +14,6 @@ RUN apk add --no-cache --update \
         libjpeg-turbo-dev \
         libpng-dev \
         openldap-dev \
-        su-exec \
         unzip
 
 # Install php modules
@@ -24,8 +23,6 @@ RUN docker-php-ext-install -j$(nproc) iconv ldap mysqli pdo pdo_mysql \
 
 # Copy caddy config
 COPY Caddyfile /etc/Caddyfile
-# Copy supervisord config
-# COPY supervisord.conf /etc/supervisord.conf
 # Copy docker entrypoint
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 # Copy template files
@@ -44,8 +41,7 @@ RUN curl -fSL -o \
     && unzip "soplanning.zip" -d /usr/src \
     && rm "soplanning.zip"
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-# CMD ["/usr/bin/supervisord","-c","/etc/supervisord.conf"]
 CMD ["caddy","-conf","/etc/Caddyfile"]

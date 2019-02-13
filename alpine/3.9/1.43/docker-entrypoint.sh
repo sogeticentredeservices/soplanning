@@ -37,8 +37,6 @@ if [ "$1" == "caddy" ]; then
 
         echo >&2 "Complete! SoPlanning is ready to use!"
     fi
-
-    exec su-exec www-data "$@"
 fi
 
 exec "$@"
