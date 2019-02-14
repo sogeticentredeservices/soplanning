@@ -2,10 +2,10 @@
 // vi: set ft=php :
 
 // Database Parameters
-$cfgHostname = '{{MYSQL_HOST}}';
-$cfgDatabase = '{{MYSQL_DATABASE}}';
-$cfgUsername = '{{MYSQL_USER}}';
-$cfgPassword = '{{MYSQL_PASSWORD}}';
+$cfgHostname = '$MYSQL_HOST';
+$cfgDatabase = '$MYSQL_DATABASE';
+$cfgUsername = '$MYSQL_USER';
+$cfgPassword = '$MYSQL_PASSWORD';
 $cfgSqlType = 'mysql';
 $cfgPrefix = 'planning_';
 ?>

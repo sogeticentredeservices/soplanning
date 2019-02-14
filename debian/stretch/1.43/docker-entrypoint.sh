@@ -19,11 +19,9 @@ if [ "$1" == "apache2-foreground" ]; then
                 echo >&2 "Missing environment variables!: SSO_PORTAL_URL"
             fi
             if [ -n "${MYSQL_DATABASE}" ] && [ -n "${MYSQL_USER}" ] && [ -n "${MYSQL_PASSWORD}" ] && [ -n "${MYSQL_HOST}" ]; then
-                sed -e "s#{{MYSQL_HOST}}#${MYSQL_HOST:-localhost}#g" \
-                    -e "s#{{MYSQL_DATABASE}}#${MYSQL_DATABASE:-soplanning}#g" \
-                    -e "s#{{MYSQL_USER}}#${MYSQL_USER}#g" \
-                    -e "s#{{MYSQL_PASSWORD}}#${MYSQL_PASSWORD}#g" \
-                    /usr/src/database.inc.template > /var/www/html/database.inc
+                envsubst '$MYSQL_HOST,$MYSQL_DATABASE,$MYSQL_USER,$MYSQL_PASSWORD' \
+                    < /usr/src/database.inc.template \
+                    > /var/www/html/database.inc
             else
                 echo >&2 "Missing environment variables!: MYSQL_HOST, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD"
             fi

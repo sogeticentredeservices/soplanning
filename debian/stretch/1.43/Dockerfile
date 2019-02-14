@@ -10,9 +10,10 @@ ENV SOPLANNING_DOWNLOAD_SHA256=f96143d476f7348f7dd0fb35fa504b6f21970e2aa929c4849
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     curl \
-    libldap-dev \
+    gettext-base \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libldap-dev \
     libldap-dev \
     libpng-dev \
     unzip \
