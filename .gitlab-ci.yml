@@ -1,0 +1,5 @@
+docker build:
+  script: docker build -t soplanning/alpine/1.43:$CI_COMMIT_REF_SLUG .
+  only:
+    changes:
+      - alpine/3.9/1.43/**
