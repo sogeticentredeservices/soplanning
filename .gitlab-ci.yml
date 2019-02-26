@@ -5,10 +5,10 @@ stages:
   - Push to Docker Hub
 
 variables:
-  LATEST_VER: $CI_REGISTRY/soplanning:alpine
-  MAJOR_VER:  $CI_REGISTRY/soplanning:1.4-alpine
-  MINOR_VER:  $CI_REGISTRY/soplanning:1.43-alpine
-  PATCH_VER:  $CI_REGISTRY/soplanning:1.43.0-alpine
+  LATEST_VER: $CI_REGISTRY/devops/docker/soplanning:alpine
+  MAJOR_VER:  $CI_REGISTRY/devops/docker/soplanning:1.4-alpine
+  MINOR_VER:  $CI_REGISTRY/devops/docker/soplanning:1.43-alpine
+  PATCH_VER:  $CI_REGISTRY/devops/docker/soplanning:1.43.0-alpine
 
 before_script:
   - docker info
