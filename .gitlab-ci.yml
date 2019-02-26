@@ -1,7 +1,7 @@
 image: docker:stable
 
 stages:
-  - Build image
+  - Build Alpine image
   - Push to Docker Hub
 
 variables:
@@ -15,12 +15,9 @@ before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
 docker build:
-  stage: Build image
+  stage: Build Alpine image
   script:
     - docker build -t $LATEST_VER -t $MAJOR_VER -t $MINOR_VER -t $PATCH_VER 1.43/alpine/
-  only:
-    changes:
-      - 1.43/alpine/**
 
 docker push:
   stage: Push to Docker Hub
