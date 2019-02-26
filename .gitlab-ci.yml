@@ -2,13 +2,8 @@ image: docker:stable
 
 stages:
   - Build Alpine image
-  - Push to Docker Hub
-
-variables:
-  LATEST_VER: $CI_REGISTRY/devops/docker/soplanning:alpine
-  MAJOR_VER:  $CI_REGISTRY/devops/docker/soplanning:1.4-alpine
-  MINOR_VER:  $CI_REGISTRY/devops/docker/soplanning:1.43-alpine
-  PATCH_VER:  $CI_REGISTRY/devops/docker/soplanning:1.43.0-alpine
+  - Build Stretch image
+  - Push to Registry
 
 before_script:
   - docker info
@@ -16,11 +11,26 @@ before_script:
 
 docker build:
   stage: Build Alpine image
+  variables:
+    LATEST_VER: $CI_REGISTRY_IMAGE:alpine
+    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43-alpine
   script:
-    - docker build -t $LATEST_VER -t $MAJOR_VER -t $MINOR_VER -t $PATCH_VER 1.43/alpine/
+   - docker build --pull -t $LATEST_VER -t $MAJOR_VER 1.43/alpine/
+  only:
+    - master
+
+docker build:
+  stage: Build Stretch image
+  variables:
+    LATEST_VER: $CI_REGISTRY_IMAGE:latest
+    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43
+  script:
+   - docker build --pull -t $LATEST_VER -t $MAJOR_VER -t ${MAJOR_VER}-stretch 1.43/stretch/
+  only:
+    - master
 
 docker push:
-  stage: Push to Docker Hub
+  stage: Push to Registry
   only:
     - master
   script:
@@ -28,3 +38,5 @@ docker push:
     - docker push $MAJOR_VER
     - docker push $MINOR_VER
     - docker push $PATCH_VER
+  only:
+    - master
