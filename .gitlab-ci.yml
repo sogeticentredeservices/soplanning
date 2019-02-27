@@ -3,8 +3,8 @@ image: docker:stable
 stages:
   - Build Alpine image
   - Build Stretch image
-  - scan
   - Push to Registry
+  - Scan for CVE
 
 before_script:
   - docker info
@@ -47,7 +47,7 @@ docker push:
 
 # https://docs.gitlab.com/ee/ci/examples/container_scanning.html
 container_scanning:
-  stage: scan
+  stage: Scan for CVE
   variables:
     ## Define two new variables based on GitLab's CI/CD predefined variables
     ## https://docs.gitlab.com/ee/ci/variables/#predefined-environment-variables
