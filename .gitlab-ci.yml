@@ -31,12 +31,15 @@ docker build:
 
 docker push:
   stage: Push to Registry
-  only:
-    - master
+  variables:
+    LATEST_VER:        $CI_REGISTRY_IMAGE:latest
+    MAJOR_VER:         $CI_REGISTRY_IMAGE:1.43
+    VARIANT_VER:       $CI_REGISTRY_IMAGE:alpine
+    VARIANT_MAJOR_VER: $CI_REGISTRY_IMAGE:1.43-alpine
   script:
     - docker push $LATEST_VER
     - docker push $MAJOR_VER
-    - docker push $MINOR_VER
-    - docker push $PATCH_VER
+    - docker push $VARIANT_VER
+    - docker push $VARIANT_MAJOR_VER
   only:
     - master
