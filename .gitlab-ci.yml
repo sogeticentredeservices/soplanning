@@ -3,6 +3,7 @@ image: docker:stable
 stages:
   - Build Alpine image
   - Build Stretch image
+  - scan
   - Push to Registry
 
 before_script:
@@ -43,3 +44,30 @@ docker push:
     - docker push $VARIANT_MAJOR_VER
   only:
     - master
+
+# https://docs.gitlab.com/ee/ci/examples/container_scanning.html
+container_scanning:
+  stage: scan
+  variables:
+    ## Define two new variables based on GitLab's CI/CD predefined variables
+    ## https://docs.gitlab.com/ee/ci/variables/#predefined-environment-variables
+    LATEST_VER:        $CI_REGISTRY_IMAGE:latest
+  allow_failure: true
+  when: manual
+  script:
+    - docker run -d --name db arminc/clair-db:latest
+    - docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:v2.0.1
+    - apk add -U wget ca-certificates
+    - docker pull ${LATEST_VER}
+    - wget https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
+    - mv clair-scanner_linux_amd64 clair-scanner
+    - chmod +x clair-scanner
+    - touch clair-whitelist.yml
+    - while( ! wget -q -O /dev/null http://docker:6060/v1/namespaces ) ; do sleep 1 ; done
+    - retries=0
+    - echo "Waiting for clair daemon to start"
+    - while( ! wget -T 10 -q -O /dev/null http://docker:6060/v1/namespaces ) ; do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; retries=$(($retries+1)) ; done
+    - ./clair-scanner -c http://docker:6060 --ip $(hostname -i) -r gl-container-scanning-report.json -l clair.log -w clair-whitelist.yml ${LATEST_VER} || true
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json
