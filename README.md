@@ -3,6 +3,8 @@ Soplanning Docker image
 
 [![pipeline status](http://10.29.164.15:8617/devops/docker/soplanning/badges/master/pipeline.svg?style=flat-square)](http://10.29.164.15:8617/devops/docker/soplanning/commits/master)
 
+![logo](https://www.soplanning.org/wp-content/uploads/2017/05/logo-soplanning.png)
+
 SO Planning is a Simple Online Planning tool. Allows you to plan working periods for each person of your team.
 
 Using this image
@@ -15,6 +17,18 @@ Start SOplanning with default options:
 ```console
 $ docker run -p 8080:80 \
 	 --link mysql:mysql -e "MYSQL_ROOT_PASSWORD=example" \
+	 10.29.164.15:4567/devops/docker/soplanning:latest
+```
+
+Start SOplanning with an existing database:
+
+```console
+$ docker run -p 8080:80 \
+	 --link mysql:mysql \
+         -e "MYSQL_HOST=mysql" \
+         -e "MYSQL_DATABASE=soplanning" \
+         -e "MYSQL_USER=soplanning" \
+         -e "MYSQL_PASSWORD=example" \
 	 10.29.164.15:4567/devops/docker/soplanning:latest
 ```
 
