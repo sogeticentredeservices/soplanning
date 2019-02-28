@@ -51,7 +51,8 @@ container_scanning:
   variables:
     ## Define two new variables based on GitLab's CI/CD predefined variables
     ## https://docs.gitlab.com/ee/ci/variables/#predefined-environment-variables
-    LATEST_VER:        $CI_REGISTRY_IMAGE:latest
+    LATEST_VER:  $CI_REGISTRY_IMAGE:latest
+    VARIANT_VER: $CI_REGISTRY_IMAGE:alpine
   allow_failure: true
   when: manual
   script:
@@ -66,6 +67,6 @@ container_scanning:
     - echo "Waiting for clair daemon to start"
     - while( ! wget -T 10 -q -O /dev/null http://clair:6060/v1/namespaces ) ; do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; retries=$(($retries+1)) ; done
     - ./clair-scanner -c http://clair:6060 --ip $(hostname -i) -r gl-container-scanning-report.json -l clair.log -w clair-whitelist.yml ${LATEST_VER} || true
+    - ./clair-scanner -c http://clair:6060 --ip $(hostname -i) -r gl-container-scanning-report.json -l clair.log -w clair-whitelist.yml ${VARIANT_VER} || true
   artifacts:
-    reports:
-      container_scanning: gl-container-scanning-report.json
+    paths: [gl-container-scanning-report.json]
