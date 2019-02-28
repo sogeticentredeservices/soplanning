@@ -16,7 +16,7 @@ docker build:
     LATEST_VER: $CI_REGISTRY_IMAGE:alpine
     MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43-alpine
   script:
-   - docker build --pull -t $LATEST_VER -t $MAJOR_VER 1.43/alpine/
+    - docker build --pull -t $LATEST_VER -t $MAJOR_VER 1.43/alpine/
   only:
     - master
 
@@ -26,7 +26,7 @@ docker build:
     LATEST_VER: $CI_REGISTRY_IMAGE:latest
     MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43
   script:
-   - docker build --pull -t $LATEST_VER -t $MAJOR_VER -t ${MAJOR_VER}-stretch 1.43/stretch/
+    - docker build --pull -t $LATEST_VER -t $MAJOR_VER -t ${MAJOR_VER}-stretch 1.43/stretch/
   only:
     - master
 
