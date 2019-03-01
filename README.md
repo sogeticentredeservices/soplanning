@@ -17,7 +17,7 @@ Start SOplanning with default options:
 ```console
 $ docker run -p 8080:80 \
 	 --link mysql:mysql -e "MYSQL_ROOT_PASSWORD=example" \
-	 git.centre-de-services:4567/devops/docker/soplanning:latest
+	 git.centre-de-services.cf:4567/devops/docker/soplanning:latest
 ```
 
 Start SOplanning with an existing database:
@@ -56,7 +56,7 @@ version: '3.1'
 services:
 
   soplanning:
-    image: git.centre-de-services:4567/devops/docker/soplanning
+    image: git.centre-de-services.cf:4567/devops/docker/soplanning
     environment:
       MYSQL_HOST:     mysql
       MYSQL_DATABASE: soplanning
