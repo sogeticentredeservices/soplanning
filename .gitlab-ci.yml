@@ -10,7 +10,7 @@ before_script:
   - docker info
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
-docker build:
+docker build alpine:
   stage: Build Alpine image
   variables:
     LATEST_VER: $CI_REGISTRY_IMAGE:alpine
@@ -20,7 +20,7 @@ docker build:
   only:
     - master
 
-docker build:
+docker build stretch:
   stage: Build Stretch image
   variables:
     LATEST_VER: $CI_REGISTRY_IMAGE:latest
