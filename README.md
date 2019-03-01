@@ -1,7 +1,7 @@
 Soplanning Docker image
 =======================
 
-[![pipeline status](http://git.centre-de-services.cf/devops/docker/soplanning/badges/master/pipeline.svg?style=flat-square)](http://10.29.164.15:8617/devops/docker/soplanning/commits/master)
+[![pipeline status](http://git.centre-de-services.cf/devops/docker/soplanning/badges/master/pipeline.svg?style=flat-square)](http://git.centre-de-services.cf/devops/docker/soplanning/commits/master)
 
 ![logo](https://www.soplanning.org/wp-content/uploads/2017/05/logo-soplanning.png)
 
