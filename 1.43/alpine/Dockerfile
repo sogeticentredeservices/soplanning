@@ -9,8 +9,11 @@ ENV SOPLANNING_DOWNLOAD_SHA256=f96143d476f7348f7dd0fb35fa504b6f21970e2aa929c4849
 RUN apk add --no-cache --update \
         bash \
         caddy \
+        php7-fpm
+
+# Build dependencies
+RUN apk add --no-cache --update --virtual .build-deps \
         curl \
-        php7-fpm \
         unzip
 
 # Php bloat
@@ -54,6 +57,9 @@ RUN curl -fSL -o \
 # Run php-fpm as www-data
 RUN sed -i "s|^user = .*|user = www-data|g" /etc/php7/php-fpm.d/www.conf && \
     sed -i "s|^group = .*|group = www-data|g" /etc/php7/php-fpm.d/www.conf
+
+# Clean build dependencies
+RUN apk del .build-deps
 
 RUN adduser -D www-data
 
