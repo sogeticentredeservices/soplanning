@@ -1,7 +1,7 @@
 Soplanning Docker image
 =======================
 
-[![pipeline status](http://git.centre-de-services.cf/devops/docker/soplanning/badges/master/pipeline.svg?style=flat-square)](http://git.centre-de-services.cf/devops/docker/soplanning/commits/master)
+[![pipeline status](http://git.sogeti.cf/devops/docker/soplanning/badges/master/pipeline.svg?style=flat-square)](http://git.sogeti.cf/devops/docker/soplanning/commits/master)
 
 ![logo](https://www.soplanning.org/wp-content/uploads/2017/05/logo-soplanning.png)
 
@@ -17,7 +17,7 @@ Start SOplanning with default options:
 ```console
 $ docker run -p 8080:80 \
 	 --link mysql:mysql -e "MYSQL_ROOT_PASSWORD=example" \
-	 registry.centre-de-services.cf/devops/docker/soplanning:latest
+	 registry.sogeti.cf/devops/docker/soplanning:latest
 ```
 
 Start SOplanning with an existing database:
@@ -29,7 +29,7 @@ $ docker run -p 8080:80 \
          -e "MYSQL_DATABASE=soplanning" \
          -e "MYSQL_USER=soplanning" \
          -e "MYSQL_PASSWORD=example" \
-	 registry.centre-de-services.cf/devops/docker/soplanning:latest
+	 registry.sogeti.cf/devops/docker/soplanning:latest
 ```
 
 This will store the application in /var/www/html. There is no need to make a volume for it. SOplanning configurations are stored on the database.
@@ -56,7 +56,7 @@ version: '3.1'
 services:
 
   soplanning:
-    image: registry.centre-de-services.cf/devops/docker/soplanning
+    image: registry.sogeti.cf/devops/docker/soplanning
     environment:
       MYSQL_HOST:     mysql
       MYSQL_DATABASE: soplanning
