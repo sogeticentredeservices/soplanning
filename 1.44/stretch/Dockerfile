@@ -3,7 +3,7 @@ LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/www
 ENV PKG_BASEVER=v1.44
-ENV PKG_VER=1-4
+ENV PKG_VER=1-44
 ENV SOPLANNING_DOWNLOAD_SHA256=535ea0eff612f31caaad281547bb25ef02c6193574763c756ee0a821887088c6
 
 # Installed required dependencies
