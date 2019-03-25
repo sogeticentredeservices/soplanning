@@ -1,0 +1,9 @@
+# vi: set ft=caddyfile :
+0.0.0.0:80
+
+root /var/www/html/www
+
+fastcgi / 127.0.0.1:9000 php
+
+on startup php-fpm7
+

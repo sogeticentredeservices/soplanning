@@ -14,9 +14,9 @@ docker build alpine:
   stage: Build Alpine image
   variables:
     LATEST_VER: $CI_REGISTRY_IMAGE:alpine
-    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43-alpine
+    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.44-alpine
   script:
-    - docker build --pull -t $LATEST_VER -t $MAJOR_VER 1.43/alpine/
+    - docker build --pull -t $LATEST_VER -t $MAJOR_VER 1.44/alpine/
   only:
     - master
 
@@ -24,9 +24,9 @@ docker build stretch:
   stage: Build Stretch image
   variables:
     LATEST_VER: $CI_REGISTRY_IMAGE:latest
-    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.43
+    MAJOR_VER:  $CI_REGISTRY_IMAGE:1.44
   script:
-    - docker build --pull -t $LATEST_VER -t $MAJOR_VER -t ${MAJOR_VER}-stretch 1.43/stretch/
+    - docker build --pull -t $LATEST_VER -t $MAJOR_VER -t ${MAJOR_VER}-stretch 1.44/stretch/
   only:
     - master
 
@@ -34,9 +34,9 @@ docker push:
   stage: Push to Registry
   variables:
     LATEST_VER:        $CI_REGISTRY_IMAGE:latest
-    MAJOR_VER:         $CI_REGISTRY_IMAGE:1.43
+    MAJOR_VER:         $CI_REGISTRY_IMAGE:1.44
     VARIANT_VER:       $CI_REGISTRY_IMAGE:alpine
-    VARIANT_MAJOR_VER: $CI_REGISTRY_IMAGE:1.43-alpine
+    VARIANT_MAJOR_VER: $CI_REGISTRY_IMAGE:1.44-alpine
   script:
     - docker push $LATEST_VER
     - docker push $MAJOR_VER
