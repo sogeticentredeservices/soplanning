@@ -3,7 +3,7 @@ LABEL maintainer Cedric Bonhomme, cedric.bonhomme@sogeti.com
 
 ENV PKG_BASEVER=v1.44
 ENV PKG_VER=1-44
-ENV SOPLANNING_DOWNLOAD_SHA256=535ea0eff612f31caaad281547bb25ef02c6193574763c756ee0a821887088c6
+ENV SOPLANNING_DOWNLOAD_SHA256=d10710180c66696497c294f37a92e054f342b8f4a48cefb9fafff14e8a0f58dd
 
 # Install required dependencies
 RUN apk add --no-cache --update \
