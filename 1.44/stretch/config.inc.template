@@ -204,9 +204,9 @@ $default_palette="['#aa2e25','#f44336','#f6685e','#a31545','#e91e63','#ed4b82','
 $user = New User();
 if(isset($_SERVER['HTTP_LOGIN']) && isset($_SERVER['HTTP_EMAIL']) && $user->db_load(array('login', '=', $_SERVER['HTTP_LOGIN'])) && $user->email == $_SERVER['HTTP_EMAIL']){
         $_SESSION['user_id'] = $user->user_id;
-}
-else {
+} else {
         $_SESSION['public'] = 1;
         $_SESSION['user_id'] = 'publicspl';
 }
+$_SESSION['status_par_defaut'] = ['a_faire', 'en_cours'];
 ?>

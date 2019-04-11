@@ -209,4 +209,5 @@ else {
         $_SESSION['public'] = 1;
         $_SESSION['user_id'] = 'publicspl';
 }
+$_SESSION['status_par_defaut'] = ['a_faire', 'en_cours'];
 ?>
